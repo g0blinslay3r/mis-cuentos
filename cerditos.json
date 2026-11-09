@@ -1,0 +1,30 @@
+{
+  "title": "Los 3 cerditos",
+  "subtitle": "Un cuento clásico",
+  "age": "4-5 años",
+  "lang": "es",
+  "cover_svg": "<svg viewBox=\"0 0 800 600\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"800\" height=\"600\" fill=\"#dceefb\"/><ellipse cx=\"400\" cy=\"610\" rx=\"500\" ry=\"150\" fill=\"#b8d994\"/><rect x=\"120\" y=\"320\" width=\"120\" height=\"120\" fill=\"#f2d98a\"/><path d=\"M120 320 L180 260 L240 320 Z\" fill=\"#e59d38\"/><rect x=\"340\" y=\"320\" width=\"120\" height=\"120\" fill=\"#c98d5a\"/><path d=\"M340 320 L400 260 L460 320 Z\" fill=\"#8b5a2b\"/><rect x=\"560\" y=\"320\" width=\"120\" height=\"120\" fill=\"#d9534f\"/><path d=\"M560 320 L620 260 L680 320 Z\" fill=\"#a94442\"/><circle cx=\"620\" cy=\"200\" r=\"40\" fill=\"#8b5a2b\"/></svg>",
+  "pages": [
+    {
+      "text": "Tres cerditos construyeron sus casas: una de paja, una de madera y una de ladrillos.",
+      "svg": "<svg viewBox=\"0 0 800 600\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"800\" height=\"600\" fill=\"#dceefb\"/><ellipse cx=\"400\" cy=\"615\" rx=\"520\" ry=\"150\" fill=\"#b8d994\"/><rect x=\"120\" y=\"320\" width=\"120\" height=\"120\" fill=\"#f2d98a\"/><path d=\"M120 320 L180 260 L240 320 Z\" fill=\"#e59d38\"/><rect x=\"340\" y=\"320\" width=\"120\" height=\"120\" fill=\"#c98d5a\"/><path d=\"M340 320 L400 260 L460 320 Z\" fill=\"#8b5a2b\"/><rect x=\"560\" y=\"320\" width=\"120\" height=\"120\" fill=\"#d9534f\"/><path d=\"M560 320 L620 260 L680 320 Z\" fill=\"#a94442\"/></svg>",
+      "audio": ""
+    },
+    {
+      "text": "El lobo sopló y derribó la casa de paja.",
+      "svg": "<svg viewBox=\"0 0 800 600\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"800\" height=\"600\" fill=\"#cfe7f8\"/><ellipse cx=\"400\" cy=\"615\" rx=\"520\" ry=\"150\" fill=\"#b8d994\"/><rect x=\"150\" y=\"360\" width=\"140\" height=\"100\" fill=\"#f2d98a\" transform=\"rotate(15 220 410)\"/><circle cx=\"500\" cy=\"300\" r=\"60\" fill=\"#8b5a2b\"/><path d=\"M440 280 L380 260 M440 320 L380 340\" stroke=\"#8b5a2b\" stroke-width=\"12\" stroke-linecap=\"round\"/></svg>",
+      "audio": ""
+    },
+    {
+      "text": "El lobo sopló y derribó la casa de madera.",
+      "svg": "<svg viewBox=\"0 0 800 600\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"800\" height=\"600\" fill=\"#cfe7f8\"/><ellipse cx=\"400\" cy=\"615\" rx=\"520\" ry=\"150\" fill=\"#b8d994\"/><rect x=\"150\" y=\"360\" width=\"140\" height=\"100\" fill=\"#c98d5a\" transform=\"rotate(-10 220 410)\"/><circle cx=\"500\" cy=\"300\" r=\"60\" fill=\"#8b5a2b\"/><path d=\"M440 280 L380 260 M440 320 L380 340\" stroke=\"#8b5a2b\" stroke-width=\"12\" stroke-linecap=\"round\"/></svg>",
+      "audio": ""
+    },
+    {
+      "text": "El lobo sopló y sopló, pero la casa de ladrillos no se movió. ¡Los cerditos estaban a salvo!",
+      "svg": "<svg viewBox=\"0 0 800 600\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"800\" height=\"600\" fill=\"#dceefb\"/><ellipse cx=\"400\" cy=\"615\" rx=\"520\" ry=\"150\" fill=\"#b8d994\"/><rect x=\"300\" y=\"300\" width=\"200\" height=\"160\" fill=\"#d9534f\"/><path d=\"M300 300 L400 230 L500 300 Z\" fill=\"#a94442\"/><circle cx=\"400\" cy=\"380\" r=\"20\" fill=\"#f2b64f\"/><circle cx=\"150\" cy=\"300\" r=\"50\" fill=\"#8b5a2b\"/><path d=\"M110 290 L70 280 M110 310 L70 320\" stroke=\"#8b5a2b\" stroke-width=\"10\" stroke-linecap=\"round\"/></svg>",
+      "audio": ""
+    }
+  ],
+  "end_text": "Solo con esfuerzo se consiguen las cosas. Fin."
+}
