@@ -16,19 +16,19 @@
   .viewer { display: none; max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 20px; }
   .viewer.active { display: block; }
   .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-  .btn { padding: 12px 25px; font-size: 1.1em; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+  .btn { padding: 12px 25px; font-size: 1.1em; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s; font-family: inherit; }
   .btn-back { background: #f4d0b5; color: #8b5a2b; }
   .btn-audio { background: #69aee6; color: white; }
   .btn-next { background: #8fbf6b; color: white; font-size: 1.3em; padding: 15px 40px; }
   .btn:hover { opacity: 0.8; }
   
-  .page { display: flex; flex-direction: row; gap: 30px; align-items: center; min-height: 400px; }
-  @media (max-width: 768px) { .page { flex-direction: column; } .text-content { font-size: 1.2em !important; } }
+  .page { display: flex; flex-direction: row; gap: 30px; align-items: flex-start; min-height: 400px; }
+  @media (max-width: 768px) { .page { flex-direction: column; } .text-content { font-size: 1.1em !important; } }
   
-  .img-content { flex: 1; display: flex; justify-content: center; align-items: center; border-radius: 15px; overflow: hidden; min-height: 250px; max-height: 500px; }
+  .img-content { flex: 1; display: flex; justify-content: center; align-items: center; border-radius: 15px; overflow: hidden; min-height: 250px; max-height: 500px; background: #f9f9f9; }
   .img-content img { width: 100%; height: auto; max-height: 500px; object-fit: contain; }
   
-  .text-content { flex: 1; font-size: 1.5em; line-height: 1.6; color: #444; text-align: justify; }
+  .text-content { flex: 1; font-size: 1.3em; line-height: 1.6; color: #444; text-align: justify; }
   .controls { display: flex; justify-content: space-between; margin-top: 20px; }
 </style>
 </head>
@@ -52,17 +52,17 @@
 
 <div id="viewer" class="viewer">
   <div class="header">
-    <button class="btn btn-back" onclick="closeBook()">⬅ Menú</button>
+    <button class="btn btn-back" onclick="closeBook()">Volver al Menu</button>
     <h2 id="book-title" style="margin:0; color:#8b5a2b;">Título</h2>
-    <button class="btn btn-audio" onclick="speakText()">🔊 Escuchar</button>
+    <button class="btn btn-audio" onclick="speakText()">Escuchar Audio</button>
   </div>
   <div class="page">
-    <div class="img-content"><img id="page-img" src="" alt="Ilustración"></div>
+    <div class="img-content"><img id="page-img" src="" alt="Ilustración del cuento" onerror="this.style.display='none'"></div>
     <div class="text-content" id="page-text">Texto de prueba...</div>
   </div>
   <div class="controls">
-    <button class="btn btn-back" onclick="prevPage()">⬅ Anterior</button>
-    <button class="btn btn-next" onclick="nextPage()">Siguiente ➡</button>
+    <button class="btn btn-back" onclick="prevPage()">Anterior</button>
+    <button class="btn btn-next" onclick="nextPage()">Siguiente</button>
   </div>
 </div>
 
@@ -72,40 +72,84 @@ const books = {
     title: "Los 3 Cerditos", folder: "cerditos",
     pages: [
       "Al lado de sus padres, tres cerditos habían crecido alegres en una cabaña del bosque. Y como ya eran mayores, sus papás decidieron que era hora de que construyeran, cada uno, su propia casa.",
+      "Los tres cerditos se despidieron de sus papás, y fueron a ver cómo era el mundo, y encontraron un bonito lugar cerca del bosque donde construir sus tres casitas.",
       "El primer cerdito, el perezoso de la familia, decidió hacer una casa de paja. En un minuto la choza estaba ya hecha. Y entonces se fue a dormir.",
       "El segundo cerdito, un glotón, prefirió hacer la cabaña de madera. No tardó mucho en construirla. Y luego se fue a comer manzanas.",
-      "El tercer cerdito, muy trabajador, optó por construirse una casa de ladrillos y cemento. Tardaría más en construirla pero estaría más protegido.",
-      "El lobo se acercó a la casa de paja. – ¡Ábreme la puerta! ¡Ábreme la puerta o soplaré y tu casa tiraré!. Como el cerdito no la abrió, el lobo sopló con fuerza, y derrumbó la casa de paja.",
-      "El cerdito corrió a la casa de madera. El lobo sopló y sopló, y aunque la casita de madera aguantó mucho más que la de paja, al final la casita se fue por los aires.",
-      "Los dos cerditos corrieron a la casa de ladrillos. El lobo sopló con todas sus fuerzas, pero la casa ni se movió. ¡Era muy fuerte!",
-      "El lobo decidió bajar por la chimenea. Pero los cerditos pusieron un caldero con agua hirviendo. El lobo se quemó y salió corriendo, nunca más volvió.",
-      "Así los cerditos pudieron vivir tranquilos y aprendieron que solo con el trabajo se consiguen las cosas. ¡Fin!"
+      "El tercer cerdito, muy trabajador, optó por construirse una casa de ladrillos y cemento. Tardaría más en construirla pero estaría más protegido. Después de un día de mucho trabajo, la casa quedó preciosa. Pero ya se empezaba a oír los aullidos del lobo en el bosque.",
+      "No tardó mucho para que el lobo se acercara a las casas de los tres cerditos. Hambriento, el lobo se dirigió a la primera casa y dijo: – ¡Ábreme la puerta! ¡Ábreme la puerta o soplaré y tu casa tiraré!",
+      "Como el cerdito no la abrió, el lobo sopló con fuerza, y derrumbó la casa de paja.",
+      "El cerdito, temblando de miedo, salió corriendo y entró en la casa de madera de su hermano. El lobo le siguió.",
+      "Y delante de la segunda casa, llamó a la puerta, y dijo: – ¡Ábreme la puerta! ¡Ábreme la puerta o soplaré y tu casa tiraré!",
+      "Pero el segundo cerdito no la abrió y el lobo sopló y sopló, y aunque la casita de madera aguantó mucho más que la casita de paja, al final la casita se fue por los aires.",
+      "Asustados, los dos cerditos corrieron y entraron en la casa de ladrillos de su otro hermano. Pero, como el lobo estaba decidido a comérselos, llamó a la puerta y gritó: – ¡Ábreme la puerta! ¡Ábreme la puerta o soplaré y tu casa tiraré! Y el cerdito trabajador le dijo: – ¡Soplas lo que quieras, pero no la abriré!",
+      "Entonces el lobo sopló y sopló. Sopló con todas sus fuerzas, pero la casa ni se movió. La casa era muy fuerte y resistente. El lobo se quedó casi sin aire.",
+      "Pero aunque el lobo estaba muy cansado, no desistía. Después de dar vueltas y vueltas a la casa, y no encontrar ningún lugar por donde entrar, pensó en subir al tejado, trajo una escalera, subió a la casa y se deslizó por la chimenea.",
+      "Estaba empeñado en entrar en la casa y comer a los tres cerditos como fuera. Pero lo que él no sabía es que los cerditos pusieron al final de la chimenea, un caldero con agua hirviendo.",
+      "Y el lobo, al caerse por la chimenea acabó quemándose con el agua caliente. Dio un enorme grito y salió corriendo y nunca más volvió por aquellos parajes. Así los cerditos pudieron vivir tranquilamente.",
+      "Y tanto el perezoso como el glotón aprendieron que solo con el trabajo se consiguen las cosas. Y enseguida se pusieron manos a la obra, y construyeron otras dos casas de ladrillos, y nunca más tuvieron problemas con ningún lobo. ¡Fin!"
     ]
   },
   caperucita: {
     title: "Caperucita Roja", folder: "caperucita",
     pages: [
-      "Había una vez una adorable niña que siempre usaba un gorrito rojo, por eso todos la llamaban Caperucita Roja.",
-      "Un día su madre le dijo: —Lleva este pastel y esta botella de vino a tu abuelita que está enferma. No te apartes del camino.",
-      "En el bosque se encontró con un lobo. El lobo le preguntó a dónde iba. Caperucita le dijo que a casa de su abuelita, que vivía bajo tres grandes robles.",
-      "El lobo le dijo: —Mira las flores, ¿por qué no recoges algunas? Caperucita se distrajo cortando flores y se adentró en el bosque.",
-      "Mientras tanto, el lobo corrió a la casa de la abuelita. Tocó la puerta, entró y se comió a la abuelita de un bocado. Luego se puso su ropa y se metió en la cama.",
-      "Caperucita llegó. —¡Abuelita, qué ojos tan grandes tienes! —Son para verte mejor. —¡Qué boca tan grande tienes! —Es para comerte mejor. Y el lobo se la tragó.",
-      "Un cazador pasó por allí, escuchó los ronquidos y entró. Abrió la panza del lobo con tijeras y salvó a Caperucita y a la abuelita.",
-      "Llenaron la panza del lobo con piedras. Cuando despertó, quiso correr pero pesaba tanto que cayó. Caperucita prometió no volver a salirse del camino. ¡Fin!"
+      "Había una vez una adorable niña que era querida por todo aquél que la conociera, pero sobre todo por su abuelita. Una vez le regaló una pequeña caperuza o gorrito de un color rojo, que le quedaba tan bien que ella nunca quería usar otra cosa, así que la empezaron a llamar Caperucita Roja.",
+      "Un día su madre le dijo: “Ven, Caperucita Roja, aquí tengo un pastel y una botella de vino, llévaselas en esta canasta a tu abuelita que está enfermita y débil. Vete ahora temprano, y en el camino, camina tranquila y con cuidado, no te apartes de la ruta, no vayas a caerte y se quiebre la botella y no quede nada para tu abuelita”.",
+      "“No te preocupes, haré bien todo”, dijo Caperucita Roja, y tomó las cosas y se despidió cariñosamente. La abuelita vivía en el bosque, como a un kilómetro de su casa.",
+      "Y no más había entrado Caperucita Roja en el bosque, siempre dentro del sendero, cuando se encontró con un lobo. Caperucita Roja no sabía que esa criatura pudiera hacer algún daño, y no tuvo ningún temor hacia él.",
+      "“Buenos días, Caperucita Roja,” dijo el lobo. “Buenos días, amable lobo.” – “¿Adónde vas tan temprano, Caperucita Roja?” – “A casa de mi abuelita.” – “¿Y qué llevas en esa canasta?” – “Pastel y vino.”",
+      "– “¿Y adónde vive tu abuelita, Caperucita Roja?” – “Como a medio kilómetro más adentro en el bosque. Su casa está bajo tres grandes robles, al lado de unos avellanos. Seguramente ya los habrás visto,” contestó inocentemente Caperucita Roja.",
+      "El lobo se dijo en silencio a sí mismo: “¡Qué criatura tan tierna! qué buen bocadito – y será más sabroso que esa viejita. Así que debo actuar con delicadeza para obtener a ambas fácilmente.”",
+      "Entonces acompañó a Caperucita Roja un pequeño tramo del camino y luego le dijo: “Mira Caperucita Roja, qué lindas flores se ven por allá, ¿por qué no vas y recoges algunas? Y yo creo también que no te has dado cuenta de lo dulce que cantan los pajaritos.”",
+      "Caperucita Roja levantó sus ojos, y al ver las bellas flores y el canto de los pájaros, pensó: “Supongo que podría llevarle unas de estas flores frescas a mi abuelita y que le encantarán. Además, aún es muy temprano.” Y así, ella se salió del camino y se fue a cortar flores.",
+      "Mientras tanto el lobo aprovechó el tiempo y corrió directo a la casa de la abuelita y tocó a la puerta. “¿Quién es?” preguntó la abuelita. “Caperucita Roja,” contestó el lobo. “Traigo pastel y vino. Ábreme, por favor.”",
+      "– “Mueve la cerradura y abre tú,” gritó la abuelita, “estoy muy débil y no me puedo levantar.” El lobo movió la cerradura, abrió la puerta, y sin decir una palabra más, se fue directo a la cama de la abuelita y de un bocado se la tragó.",
+      "Y enseguida se puso ropa de ella, se colocó un gorro, se metió en la cama y cerró las cortinas.",
+      "Mientras tanto, Caperucita Roja se había quedado colectando flores, y cuando vio que tenía tantas que ya no podía llevar más, se acordó de su abuelita y se puso en camino hacia ella. Cuando llegó, se sorprendió al encontrar la puerta abierta.",
+      "Al entrar a la casa, sintió tan extraño presentimiento que se dijo para sí misma: “¡Oh Dios! qué incómoda me siento hoy.” Entonces gritó: “¡Buenos días!”, pero no hubo respuesta, así que fue al dormitorio y abrió las cortinas.",
+      "Allí parecía estar la abuelita con su gorro cubriéndole toda la cara, y con una apariencia muy extraña. “¡Oh, abuelita!” dijo, “qué orejas tan grandes que tienes.” – “Es para oírte mejor, mi niña,” fue la respuesta.",
+      "“Pero abuelita, qué ojos tan grandes que tienes.” – “Son para verte mejor, querida.” – “Pero abuelita, qué brazos tan grandes que tienes.” – “Para abrazarte mejor.” – “Y qué boca tan grande que tienes.” – “Para comerte mejor.” Y no había terminado de decir lo anterior, cuando de un salto salió de la cama y se tragó también a Caperucita Roja.",
+      "Entonces el lobo decidió hacer una siesta y se volvió a tirar en la cama, y una vez dormido empezó a roncar fuertemente.",
+      "Un cazador que por casualidad pasaba en ese momento por allí, escuchó los fuertes ronquidos y pensó: ¡Cómo ronca esa viejita! Voy a ver si necesita alguna ayuda. Entonces ingresó al dormitorio, y cuando se acercó a la cama vio al lobo tirado allí.",
+      "“¡Así que te encuentro aquí, viejo pecador!” dijo él. “¡Hacía tiempo que te buscaba!” Y ya se disponía a disparar su arma contra él, cuando pensó que el lobo podría haber devorado a la viejita y que aún podría ser salvada, por lo que decidió no disparar.",
+      "En su lugar tomó unas tijeras y empezó a cortar el vientre del lobo durmiente. En cuanto había hecho dos cortes, vio brillar una gorrita roja, entonces hizo dos cortes más y la pequeña Caperucita Roja salió rapidísimo, gritando: “¡Qué asustada que estuve!”, y enseguida salió también la abuelita, vivita.",
+      "Rápidamente, Caperucita Roja trajo muchas piedras con las que llenaron el vientre del lobo. Y cuando el lobo despertó, quiso correr e irse lejos, pero las piedras estaban tan pesadas que no soportó el esfuerzo y cayó muerto.",
+      "Las tres personas se sintieron felices. La abuelita comió el pastel y bebió el vino que le trajo Caperucita Roja y se reanimó. Pero Caperucita Roja solamente pensó: “Mientras viva, nunca me retiraré del sendero para internarme en el bosque, cosa que mi madre me había ya prohibido hacer.” ¡Fin!"
     ]
   },
   patito: {
     title: "El Patito Feo", folder: "patito",
     pages: [
-      "En el campo, mamá pata esperaba a que nacieran sus patitos. Uno de los huevos tardó mucho en abrirse. Cuando nació, la pata vio lo grande y feo que era.",
-      "Los otros patitos y las gallinas se burlaban de él por ser diferente. —¡Qué feo es! —decían. Incluso sus hermanos lo trataban mal.",
-      "El patito huyó del corral. Llegó a unos pantanos y pasó la noche triste. —Es porque soy tan feo —pensó. Vio perros y cazadores, pero por suerte no lo comieron.",
-      "Llegó el invierno, hacía mucho frío y el patito tuvo que nadar sin parar para no congelarse. Un campesino lo rescató del hielo y lo llevó a su casa.",
-      "Los niños de la casa querían jugar con él, pero el patito se asustó y volcó la leche. La mujer se enojó y él escapó a la nieve.",
-      "Por fin llegó la primavera. El patito movió sus alas y voló hasta un estanque. Allí vio tres hermosos cisnes blancos.",
-      "El patito se acercó, y al mirarse en el agua, vio su reflejo: ¡ya no era un patito feo, era un hermoso cisne blanco! Los otros cisnes lo acogieron.",
-      "Unos niños dijeron: —¡Hay un cisne nuevo, es el más hermoso! Él era muy feliz, pues comprendió que la verdadera belleza está en el corazón. ¡Fin!"
+      "¡Qué lindos eran los días de verano! Bañada de sol se alzaba allí una vieja mansión solariega a la que rodeaba un profundo foso; desde sus paredes crecían unas plantas de hojas gigantescas. Era allí donde cierta pata había hecho su nido.",
+      "Ya era tiempo de sobra para que naciesen los patitos, pero se demoraban tanto, que la mamá comenzaba a perder la paciencia. Al fin los huevos se abrieron uno tras otro. «¡Pip, pip!», decían los patitos conforme iban asomando sus cabezas.",
+      "«¡Cuac, cuac!», dijo la mamá pata. –«¡Oh, qué grande es el mundo!», dijeron los patitos. –«¿Creen acaso que esto es el mundo entero?», preguntó la pata. «Pues sepan que se extiende mucho más allá del jardín.»",
+      "Pero faltaba el huevo más grande. Una pata vieja que vino de visita dijo: —Déjame echar un vistazo a ese huevo que no acaba de romper. Te apuesto a que es un huevo de pava. Déjalo y enseña a nadar a los otros.",
+      "—Creo que me quedaré sobre él un ratito aún —dijo la pata—. He estado tanto tiempo aquí sentada, que un poco más no me hará daño.",
+      "Por fin se rompió el huevo. «¡Pip, pip!», dijo el pequeño, volcándose del cascarón. La pata vio lo grande y feo que era, y exclamó: —¡Dios mío, qué patito tan enorme! No se parece a ninguno de los otros.",
+      "Al otro día hizo un tiempo maravilloso. La mamá pata se acercó al foso con toda su familia y, ¡plaf!, saltó al agua. —¡Cuac, cuac! —llamaba. Y uno tras otro los patitos se fueron abalanzando tras ella. Hasta el patito feo y gris nadaba con los otros.",
+      "—No es un pavo, por cierto —dijo la pata—. Fíjense en la elegancia con que nada. Vamos, vengan conmigo y déjenme enseñarles el mundo y presentarlos al corral entero.",
+      "Y con esto se encaminaron al corral. Pero los otros patos que estaban allí los miraron con desprecio y exclamaron en alta voz: —¡Vaya! ¡Qué patito tan feo! No podemos soportarlo. Y uno de los patos salió enseguida corriendo y le dio un picotazo en el cuello.",
+      "—¡Déjenlo tranquilo! —dijo la mamá—. No le está haciendo daño a nadie. —Sí, pero es tan desgarbado y extraño —dijo el que lo había picoteado—, que no quedará más remedio que despachurrarlo.",
+      "El pobre patito que había salido el último del cascarón no recibió más que picotazos, empujones y burlas. —¡Qué feo es! —decían. El pobre patito no sabía dónde meterse. Sentíase terriblemente abatido por ser tan feo.",
+      "Incluso sus hermanos y hermanas lo maltrataban de vez en cuando y le decían: —¡Ojalá te agarre el gato, grandulón! Hasta su misma mamá, deseaba que estuviese lejos del corral.",
+      "Entonces el patito huyó del corral. De un revuelo, saltó por encima de la cerca. «¡Es porque soy tan feo!» —pensó el patito, cerrando los ojos. Pero así y todo siguió corriendo hasta que llegó a los grandes pantanos donde viven los patos salvajes.",
+      "A la mañana siguiente, los patos salvajes remontaron el vuelo y miraron a su nuevo compañero. —¿Y tú qué cosa eres? —le preguntaron. —¡Eres más feo que un espantapájaros! —dijeron—. Pero eso nos importa, con tal que no quieras casarte con una de nuestras hermanas.",
+      "Unos días más tarde aparecieron por allí dos gansos salvajes. —Mira, muchacho —comenzaron diciéndole—, eres tan feo que nos caes simpático. ¿Quieres emigrar con nosotros?",
+      "—¡Bang, bang! —se escuchó en ese instante, y los dos gansos cayeron muertos. Se había organizado una importante cacería. Los perros de caza aparecieron chapaleando entre el agua. Aquello aterrorizó al pobre patito.",
+      "De pronto apareció junto a él un enorme y espantoso perro. Le acercó el hocico, le enseñó sus agudos dientes, y de pronto… ¡plaf!… ¡allá se fue otra vez sin tocarlo! El patito dio un suspiro de alivio. —Por suerte, soy tan feo, que ni los perros tienen ganas de comerme —se dijo.",
+      "Hacia el crepúsculo llegó a una pobre cabaña campesina. En ella vivía una anciana con su gato y su gallina. La anciana creyó que el patito feo era una pata regordeta que se había perdido. —¡Qué suerte! —dijo—. Ahora tendremos huevos de pata.",
+      "Le dieron tres semanas de plazo para poner, al término de las cuales, por supuesto, no había ni rastros de huevo. La gallina le preguntó: —¿Puedes poner huevos? —No. —Pues entonces, ¡cállate!",
+      "El patito fue a sentarse en un rincón, muy desanimado. Pero de pronto recordó el aire fresco y el sol, y sintió una nostalgia tan grande de irse a nadar en el agua. —Creo que me voy a recorrer el ancho mundo —dijo el patito. —Sí, vete —dijo la gallina.",
+      "Y así fue como el patito se marchó. Nadó y se zambulló; pero ningún ser viviente quería tratarse con él por lo feo que era. Pronto llegó el otoño. Las hojas se tornaron amarillas; el viento las arrancó. El pobre patito feo no lo estaba pasando muy bien.",
+      "Cierta tarde, emergió de entre los arbustos una bandada de grandes y hermosas aves. Eran de una blancura resplandeciente, y tenían largos y esbeltos cuellos. Eran cisnes. El patito se sintió lleno de una rara inquietud. ¡Ah, jamás podría olvidar aquellos hermosos pájaros!",
+      "¡Cuán frío se presentaba aquel invierno! El patito se veía forzado a nadar incesantemente para impedir que el agua se congelase en torno suyo. Por fin, debilitado por el esfuerzo, quedóse muy quieto y comenzó a congelarse rápidamente sobre el hielo.",
+      "A la mañana siguiente, muy temprano, lo encontró un campesino. Rompió el hielo con uno de sus zuecos de madera, lo recogió y lo llevó a casa, donde su mujer se encargó de revivirlo.",
+      "Los niños querían jugar con él, pero el patito feo tenía terror de sus travesuras y, con el miedo, fue a meterse revoloteando en la paila de la leche. Gritó la mujer y dio unas palmadas en el aire, y él, más asustado, se hundió entre la nieve recién caída.",
+      "Pero llegó la hermosa primavera. El patito probó sus alas: el zumbido que hicieron fue mucho más fuerte que otras veces, y lo arrastraron rápidamente a lo alto. Se halló en un vasto jardín con manzanos en flor y fragantes lilas, y un sinuoso arroyo.",
+      "Y en eso surgieron frente a él tres hermosos cisnes blancos. El patito feo reconoció a aquellas espléndidas criaturas, y se sintió sobrecogido. —¡Volaré hasta esas regias aves! —se dijo—. Me darán de picotazos hasta matarme, pero mejor es eso a sufrir.",
+      "Y así, voló hasta el agua y nadó hacia los hermosos cisnes. —¡Sí, mátenme, mátenme! —gritó la desventurada criatura, inclinando la cabeza hacia el agua. Pero, ¿qué es lo que vio allí en la límpida corriente? ¡Era el reflejo de un cisne!",
+      "Poco importa que se nazca en el corral de los patos, siempre que uno salga de un huevo de cisne. Se sentía realmente feliz de haber pasado tantos trabajos, pues esto lo ayudaba a apreciar mejor la alegría y la belleza que le esperaban.",
+      "En el jardín habían entrado unos niños que lanzaban al agua pedazos de pan. El más pequeño exclamó: —¡Ahí va un nuevo cisne! —¡Sí, hay un cisne nuevo! —corearon. —¡El nuevo es el más hermoso! ¡Qué joven y esbelto es!",
+      "Y los cisnes viejos se inclinaron ante él. Esto lo llenó de timidez, y escondió la cabeza bajo el ala. Era muy, pero muy feliz, pues no había en él ni una pizca de orgullo. —Jamás soñé que podría haber tanta felicidad, allá en los tiempos en que era sólo un patito feo. ¡Fin!"
     ]
   }
 };
@@ -132,10 +176,8 @@ function closeBook() {
 function renderPage() {
   window.speechSynthesis.cancel();
   document.getElementById('book-title').innerText = currentBook.title;
-  
-  // Aquí se arma la ruta de la imagen: ej. "caperucita/caperucita-1.png"
   document.getElementById('page-img').src = currentBook.folder + "/" + currentBook.folder + "-" + (currentPage + 1) + ".png";
-  
+  document.getElementById('page-img').style.display = 'block';
   document.getElementById('page-text').innerText = currentBook.pages[currentPage];
 }
 
