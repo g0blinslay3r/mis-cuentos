@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Biblioteca de Cuentos</title>
+<title>Biblioteca de Liz Esmeralda López Pazmiño</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); margin: 0; padding: 20px; color: #333; min-height: 100vh; overflow-x: hidden; }
@@ -27,6 +27,7 @@
   .btn-prev { background: #fab1a0; color: white; font-size: 1.4em; padding: 15px 40px; }
   @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
   .page { display: flex; flex-direction: row; gap: 30px; align-items: flex-start; min-height: 400px; }
+  @media (max-width: 768px) { .page { flex-direction: column; } .text-content { font-size: 1.2em !important; } h1 { font-size: 2em; } }
   .img-content { flex: 1; display: flex; justify-content: center; align-items: center; border-radius: 20px; overflow: hidden; min-height: 250px; background: #f9f9f9; }
   .img-content img { width: 100%; height: auto; object-fit: contain; border-radius: 15px; }
   .text-content { flex: 1; font-size: 1.5em; line-height: 1.6; color: #2d3436; text-align: justify; font-weight: 600; }
@@ -36,6 +37,7 @@
 <body>
 
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+
 <h1 id="main-title">Biblioteca de Liz Esmeralda López Pazmiño</h1>
 <div id="menu" class="menu">
   <div class="card" onclick="openBook('cerditos')">
@@ -55,20 +57,48 @@
 <div id="viewer" class="viewer">
   <div class="header">
     <button class="btn btn-back" onclick="closeBook()">🏠 Volver al Menu</button>
-    <h2 id="book-title" style="margin:0; color:#8b5a2b;">Título</h2>
+    <h2 id="book-title" style="margin:0; color:#8b5a2b; font-family: 'Fredoka One', cursive; font-size: 2em;">Título</h2>
     <button class="btn btn-audio" onclick="speakText()">🔊 Escuchar</button>
   </div>
   <div class="page">
-    <div class="img-content"><img id="page-img" src="" alt="Ilustración del cuento" onerror="this.style.display='none'"></div>
+    <div class="img-content"><img id="page-img" src="" alt="Ilustración"></div>
     <div class="text-content" id="page-text">Texto de prueba...</div>
   </div>
   <div class="controls">
-    <button class="btn btn-back" onclick="prevPage()">⬅️ Anterior</button>
+    <button class="btn btn-prev" onclick="prevPage()">⬅️ Anterior</button>
     <button class="btn btn-next" onclick="nextPage()">Siguiente ➡️</button>
   </div>
 </div>
 
 <script>
+// --- MÚSICA DE FONDO ---
+let audioCtx, isPlayingMusic = false, musicInterval;
+const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+function toggleMusic() {
+  const btn = document.getElementById('musicBtn');
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (isPlayingMusic) {
+    clearInterval(musicInterval); isPlayingMusic = false; btn.innerText = "🔇"; btn.style.background = "#ff7675";
+  } else {
+    isPlayingMusic = true; btn.innerText = "🎵"; btn.style.background = "#a29bfe";
+    playMelody(); musicInterval = setInterval(playMelody, 4000);
+  }
+}
+function playMelody() {
+  if(audioCtx.state === 'suspended') audioCtx.resume();
+  const melody = [0, 2, 4, 5, 4, 2, 1, 0]; let delay = 0;
+  melody.forEach((noteIndex) => {
+    const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = notes[noteIndex];
+    osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime + delay);
+    gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + delay + 0.1);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + 1);
+    osc.start(audioCtx.currentTime + delay); osc.stop(audioCtx.currentTime + delay + 1);
+    delay += 0.5;
+  });
+}
+
 const books = {
   cerditos: {
     title: "Los 3 Cerditos", folder: "cerditos",
@@ -156,52 +186,19 @@ const books = {
   }
 };
 
-
-// --- MÚSICA DE FONDO ---
-let audioCtx, isPlayingMusic = false, musicInterval;
-const notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
-function toggleMusic() {
-  const btn = document.getElementById('musicBtn');
-  if (isPlayingMusic) {
-    clearInterval(musicInterval); isPlayingMusic = false; btn.innerText = "🔇"; btn.style.background = "#ff7675";
-  } else {
-    isPlayingMusic = true; btn.innerText = "🎵"; btn.style.background = "#a29bfe";
-    playMelody(); musicInterval = setInterval(playMelody, 4000);
-  }
-}
-function playMelody() {
-  if(audioCtx.state === 'suspended') audioCtx.resume();
-  const melody = [0, 2, 4, 5, 4, 2, 1, 0]; let delay = 0;
-  melody.forEach((noteIndex) => {
-    const osc = audioCtx.createOscillator(); const gainNode = audioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = notes[noteIndex];
-    osc.connect(gainNode); gainNode.connect(audioCtx.destination);
-    gainNode.gain.setValueAtTime(0, audioCtx.currentTime + delay);
-    gainNode.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + delay + 0.1);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + 1);
-    osc.start(audioCtx.currentTime + delay); osc.stop(audioCtx.currentTime + delay + 1);
-    delay += 0.5;
-  });
-}
-
-// Auto-reproducir audio al cambiar de página
-const renderPageOriginal = renderPage;
-renderPage = function() {
-  renderPageOriginal();
-  setTimeout(speakText, 600);
-};
-
 let currentBook = null;
 let currentPage = 0;
+let isReading = false;
 
 function openBook(id) {
   if(isPlayingMusic) toggleMusic();
+  
   currentBook = books[id];
   currentPage = 0;
   document.getElementById('menu').style.display = 'none';
   document.getElementById('main-title').style.display = 'none';
   document.getElementById('viewer').classList.add('active');
-  renderPage();
+  renderPage(true); 
 }
 
 function closeBook() {
@@ -211,25 +208,32 @@ function closeBook() {
   window.speechSynthesis.cancel();
 }
 
-function renderPage() {
+function renderPage(autoPlay = false) {
   window.speechSynthesis.cancel();
   document.getElementById('book-title').innerText = currentBook.title;
-  document.getElementById('page-img').src = currentBook.folder + "/" + currentBook.folder + "-" + (currentPage + 1) + ".png";
-  document.getElementById('page-img').style.display = 'block';
+  
+  const imgElement = document.getElementById('page-img');
+  imgElement.src = currentBook.folder + "/" + currentBook.folder + "-" + (currentPage + 1) + ".png";
+  imgElement.style.display = 'block';
+  
   document.getElementById('page-text').innerText = currentBook.pages[currentPage];
+
+  if(autoPlay) {
+    setTimeout(speakText, 600); 
+  }
 }
 
 function nextPage() {
   if (currentPage < currentBook.pages.length - 1) {
     currentPage++;
-    renderPage();
+    renderPage(true);
   }
 }
 
 function prevPage() {
   if (currentPage > 0) {
     currentPage--;
-    renderPage();
+    renderPage(true);
   }
 }
 
@@ -238,10 +242,16 @@ function speakText() {
   const text = currentBook.pages[currentPage];
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'es-ES';
-  utterance.rate = 0.9;
+  utterance.rate = 0.95;
+  
+  const voices = window.speechSynthesis.getVoices();
+  const spanishVoice = voices.find(voice => voice.lang.includes('es'));
+  if (spanishVoice) {
+    utterance.voice = spanishVoice;
+  }
+  
   window.speechSynthesis.speak(utterance);
 }
 </script>
 </body>
 </html>
- 
